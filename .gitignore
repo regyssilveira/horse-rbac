@@ -1,0 +1,37 @@
+# Delphi compiled
+*.dcu
+*.ddp
+*.dof
+*.dsk
+*.err
+*.hresult
+*.local
+*.identcache
+*.projdata
+*.tvsconfig
+*.stat
+*.otares
+*.~*
+*.dcu
+*.o
+*.ppu
+*.or
+*.a
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.pdb
+
+# Lazarus / FPC
+lib/
+backup/
+*.lps
+*.lpi
+*.lfm
+
+# Boss packages
+modules/
+boss-lock.json
