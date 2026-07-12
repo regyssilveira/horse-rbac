@@ -1,25 +1,26 @@
-<p align="center">
-  <a href="https://github.com/HashLoad/horse/blob/master/img/horse.png">
-    <img alt="Horse" height="150" src="https://github.com/HashLoad/horse/blob/master/img/horse.png">
-  </a>
-</p><br>
-<p align="center">
-  <b>horse-rbac</b> é um middleware de controle de acesso baseado em funções (RBAC) e escopos para o framework <a href="https://github.com/HashLoad/horse">Horse</a>.
-</p><br>
+# Horse RBAC Middleware
+
+Middleware de controle de acesso baseado em funções (RBAC) e escopos para o framework **Horse**. 
+
+Projetado para simplificar a autorização de rotas em APIs Delphi e Lazarus, permitindo a checagem de permissões e escopos granulares de forma simples e declarativa. O middleware lê as permissões do usuário a partir das Claims do JWT decodificado e gerencia o controle de acesso por rota.
+
+---
 
 ## ⚙️ Instalação
 
-A instalação é feita utilizando o comando [`boss install`](https://github.com/HashLoad/boss):
+A instalação é feita de forma simples através do gerenciador de pacotes [`boss`](https://github.com/HashLoad/boss):
 
 ```sh
-boss install github.com/user/horse-rbac
+boss install horse-rbac
 ```
 
 ---
 
-## ⚡️ Quickstart
+## ⚡️ Como usar
 
-Para utilizar o `horse-rbac`, basta declarar a unit `Horse.RBAC` e injetar o middleware nas rotas desejadas. O middleware lê o payload do token JWT diretamente de `Req.Session` (injetado previamente por qualquer middleware de autenticação, como o `horse-jwt`).
+### 1. Configure e Proteja suas Rotas
+
+Basta declarar a unit `Horse.RBAC` e injetar o middleware nas rotas desejadas. O middleware lê o payload do token JWT diretamente de `Req.Session` (injetado previamente por qualquer middleware de autenticação, como o `horse-jwt`).
 
 ```delphi
 uses
@@ -42,9 +43,7 @@ begin
 end.
 ```
 
----
-
-## 🛠️ Configuração e Assinatura
+### 2. Configure a Lógica de Permissões (Parâmetros)
 
 O middleware é inicializado através da função `RBAC`:
 
@@ -52,7 +51,6 @@ O middleware é inicializado através da função `RBAC`:
 function RBAC(const APermissions: array of string; const AClaimName: string = 'permissions'; const AVerifyAll: Boolean = False): THorseCallback;
 ```
 
-### Parâmetros:
 * **`APermissions`**: Array de strings contendo os escopos/permissões granulares necessários para acessar a rota (ex: `['pedidos:read']`, `['pedidos:write', 'entidades:write']`).
 * **`AClaimName`**: Nome da chave (claim) dentro do objeto JSON da sessão onde estão listadas as permissões do usuário. O padrão é `'permissions'`.
 * **`AVerifyAll`**: Lógica de checagem quando há múltiplos escopos requeridos:
@@ -79,7 +77,7 @@ O middleware processa exclusivamente a claim do JWT contendo as permissões no f
 
 ---
 
-## 🛑 Tratamento de Erros e Interrupção (Padrão Horse)
+## 🛑 Tratamento de Erros e Interrupção
 
 Em conformidade com o ecossistema do Horse:
 * Caso a sessão JWT não seja encontrada em `Req.Session` (usuário não autenticado), o middleware retorna status **`401 Unauthorized`** e interrompe o pipeline levantando a exceção `EHorseCallbackInterrupted`.
@@ -116,7 +114,7 @@ type
 
 ## 💻 Compatibilidade
 
-* **Delphi XE7** e superiores (compatível com sintaxe clássica e sem variáveis inline).
+* **Delphi XE7** e superiores.
 * **Lazarus / Free Pascal (FPC)** (compatibilidade garantida via diretivas de compilação utilizando `fpjson`).
 * Desenvolvido sob princípios **Clean Code**, **SOLID** e thread-safe.
 
