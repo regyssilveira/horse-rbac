@@ -35,3 +35,4 @@ backup/
 # Boss packages
 modules/
 boss-lock.json
+test-bin/

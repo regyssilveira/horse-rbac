@@ -36,7 +36,7 @@ begin
   FPort := 9099;
   
   // Rota A: Exige 'pedidos:read' (Lógica OR - Padrão)
-  THorse.Get('/pedidos-read', [
+  THorse.Use('/pedidos-read', [
     procedure(Req: THorseRequest; Res: THorseResponse; Next: {$IF DEFINED(FPC)}TNextProc{$ELSE}TProc{$ENDIF})
     var
       LAuthHeader: string;
@@ -61,20 +61,21 @@ begin
         end;
         {$ELSE}
         LJson := TJSONObject.ParseJSONValue(LAuthHeader) as TJSONObject;
-        Req.Session(LJson, True);
+        Req.Session(LJson);
         {$ENDIF}
       end;
       Next();
     end,
     RBAC(['pedidos:read'])
-  ],
+  ]);
+  THorse.Get('/pedidos-read',
   procedure(Req: THorseRequest; Res: THorseResponse)
   begin
     Res.Send('OK Read');
   end);
 
   // Rota B: Exige 'pedidos:write' E 'entidades:write' (Lógica AND)
-  THorse.Get('/pedidos-write-and', [
+  THorse.Use('/pedidos-write-and', [
     procedure(Req: THorseRequest; Res: THorseResponse; Next: {$IF DEFINED(FPC)}TNextProc{$ELSE}TProc{$ENDIF})
     var
       LAuthHeader: string;
@@ -98,13 +99,14 @@ begin
         end;
         {$ELSE}
         LJson := TJSONObject.ParseJSONValue(LAuthHeader) as TJSONObject;
-        Req.Session(LJson, True);
+        Req.Session(LJson);
         {$ENDIF}
       end;
       Next();
     end,
     RBAC(['pedidos:write', 'entidades:write'], 'permissions', True)
-  ],
+  ]);
+  THorse.Get('/pedidos-write-and',
   procedure(Req: THorseRequest; Res: THorseResponse)
   begin
     Res.Send('OK Write AND');
