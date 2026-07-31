@@ -1,7 +1,7 @@
 {
   "name": "horse-rbac",
   "description": "Role-Based Access Control (RBAC) and scope verification middleware for Horse",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "",
   "mainsrc": "src/",
   "projects": [],
