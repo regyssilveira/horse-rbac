@@ -38,7 +38,7 @@ begin
       LSession: TJSONObject;
       LPermissionsArray: TJSONArray;
       LHasPermission: Boolean;
-      J, K, LIndex: Integer;
+      J, LIndex: Integer;
       LPermValue: string;
       LRequiredCount: Integer;
       LMatchedCount: Integer;
